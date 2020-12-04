@@ -23,25 +23,27 @@ public class BSTree<T> {
     }
 
     public void setNode(NodeTree<T> node){
-
         if (this.root == null){
             this.root = node;
-
         }else{
-
             NodeTree<T> subroot = this.root;
             NodeTree<T> actual = this.root;
-
             while(actual != null) {
-                if (String.valueOf(node.getData()).compareTo(String.valueOf(node.getData())) < 0) {
-
-
-                } else if (String.valueOf(node.getData()).compareTo(String.valueOf(node.getData())) > 0) {
-
+                if (   Integer.valueOf(String.valueOf(node.getData()))<Integer.valueOf(String.valueOf(actual.getData()))   ) {
+                    subroot = actual;
+                    actual = actual.getLeft();
+                } else if (Integer.valueOf(String.valueOf(node.getData()))>Integer.valueOf(String.valueOf(actual.getData())) ) {
+                    subroot = actual;
+                    actual = actual.getRight();
                 } else {
                     System.out.print("El dato ya se encuantra en el árbol");
                     return;
                 }
+            }
+            if (   Integer.valueOf(String.valueOf(node.getData()))<Integer.valueOf(String.valueOf(actual.getData()))   ) {
+                subroot.setLeft(node);
+            } else if (Integer.valueOf(String.valueOf(node.getData()))>Integer.valueOf(String.valueOf(actual.getData())) ) {
+                subroot.setRight(node);
             }
 
         }
