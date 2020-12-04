@@ -65,6 +65,8 @@ public class Server {
             public void run() {
                 try {
                     socket[0] = finalServer.accept();
+                    System.out.println("Client connected successfully");
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -73,30 +75,37 @@ public class Server {
 
         startSocket.start();
 
+
         boolean running = true;
 
         while (running){
             String input = reader.readLine();
+            if (!input.equals("")) {
+                StringTokenizer tokens = new StringTokenizer(input, ":");
 
-            StringTokenizer tokens = new StringTokenizer(input, ":");
+                String command = tokens.nextToken();
+                String attributes = tokens.nextToken();
 
-            String command = tokens.nextToken();
-            String attributes = tokens.nextToken();
-
-            switch (command){
-                case "startChallenge":
-                    StartChallengeMessage sCMessg = new StartChallengeMessage(attributes);
-                    break;
-                case "sendToken":
-                    StringTokenizer tAtts = new StringTokenizer(attributes);
-                    String tArbol = tAtts.nextToken();
-                    String tValor = tAtts.nextToken();
-                    SendToken sToken = new SendToken(tArbol,tValor);
-                    break;
-                default:
-                    System.out.println("Command not valid. Try: \n startChallenge:<<type of tree>>\n sendToken:<<Type of tree>>,<<value>>");
+                switch (command) {
+                    case "startChallenge":
+                        StartChallengeMessage sCMessg = new StartChallengeMessage(attributes);
+                        break;
+                    case "sendToken":
+                        StringTokenizer tAtts = new StringTokenizer(attributes);
+                        String tArbol = tAtts.nextToken();
+                        String tValor = tAtts.nextToken();
+                        SendToken sToken = new SendToken(tArbol, tValor);
+                        break;
+                    default:
+                        System.out.println("Command not valid. Try:");
+                        System.out.println("* startChallenge:<<type of tree>>");
+                        System.out.println("* sendToken:<<Type of tree>>,<<value>>");
+                }
+            } else {
+                System.out.println("Command not valid. Try:");
+                System.out.println("* startChallenge:<<type of tree>>");
+                System.out.println("* sendToken:<<Type of tree>>,<<value>>");
             }
-
         }
 
     }
