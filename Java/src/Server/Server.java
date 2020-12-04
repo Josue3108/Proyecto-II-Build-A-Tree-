@@ -8,8 +8,6 @@ import java.util.Vector;
 
 
 public class Server {
-    static Vector<ClientHandler> clientList = new Vector<>();
-    static int i = 0;
 
     //PORT TO LISTEN TO
 
@@ -73,6 +71,8 @@ public class Server {
         };
 
         startSocket.start();
+
+
     }
 
 }
