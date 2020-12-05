@@ -5,14 +5,14 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 import java.util.StringTokenizer;
-import java.util.Vector;
 
 
-public class Server {
+
+public class Server_main {
 
     //PORT TO LISTEN TO
 
-    static int PORT;
+    static int PORT = 8000;
 
     public static void main(String[] args) throws IOException{
         final boolean[] flag1 = {true};
@@ -24,22 +24,6 @@ public class Server {
 
         //Ask to type the port
 
-        System.out.println("Select a port to start the server on");
-
-        String inputPort = reader.readLine();
-
-        while (true){
-            try{
-                PORT = Integer.parseInt(inputPort);
-                break;
-            } catch (NumberFormatException e){
-
-                System.out.println("Input a valid port to listen to...");
-                System.out.println("Select a port to start the server on...");
-
-                inputPort = reader.readLine();
-            }
-        }
 
         ServerSocket server;
 

@@ -1,4 +1,4 @@
 package Trees;
 
-public class AVLTree {
+public class AVLTree extends Tree{
 }

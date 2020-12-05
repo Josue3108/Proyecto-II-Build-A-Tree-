@@ -1,4 +1,4 @@
 package Trees;
 
-public class BTree {
+public class BTree extends Tree{
 }
