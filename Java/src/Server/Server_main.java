@@ -6,14 +6,22 @@ import java.net.Socket;
 
 import java.util.StringTokenizer;
 
-
-
 public class Server_main {
 
     //PORT TO LISTEN TO
-
     static int PORT = 8000;
 
+    public static void  sendMessage(String msg, OutputStream os) throws IOException {
+        byte [] toSendBytes = msg.getBytes();
+        int toSendLen = toSendBytes.length;
+        byte[] toSendLenBytes = new byte[4];
+        toSendLenBytes[0] = (byte)(toSendLen & 0xff);
+        toSendLenBytes[1] = (byte)((toSendLen >> 8) & 0xff);
+        toSendLenBytes[2] = (byte)((toSendLen >> 16) & 0xff);
+        toSendLenBytes[3] = (byte)((toSendLen >> 24) & 0xff);
+        os.write(toSendLenBytes);
+        os.write(toSendBytes);
+    }
     public static void main(String[] args) throws IOException{
         final boolean[] flag1 = {true};
 
@@ -21,9 +29,7 @@ public class Server_main {
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
-
         //Ask to type the port
-
 
         ServerSocket server;
 
@@ -42,14 +48,45 @@ public class Server_main {
         System.out.println("Waiting for client...");
 
         final Socket[] socket = new Socket[1];
+        final InputStream[] is = {null};
+        final OutputStream[] os = {null};
 
+
+        Thread startReading = new Thread() {
+            public void run() {
+                while (true){
+                    try {
+                        byte [] lenBytes = new byte[4];
+                        is[0].read(lenBytes,0,4);
+
+                        int len = (((lenBytes[3] & 0xff) << 24) | ((lenBytes[2] & 0xff) << 16) |
+                                ((lenBytes[1] & 0xff) << 8) | (lenBytes[0] & 0xff));
+                        byte[] receivedBytes = new byte[len];
+
+                        is[0].read(receivedBytes,0,len);
+
+                        String msg = new String(receivedBytes,0,len);
+
+                        System.out.println(msg);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            }
+        };
 
         ServerSocket finalServer = server;
+
         Thread startSocket = new Thread() {
             public void run() {
                 try {
                     socket[0] = finalServer.accept();
+
+                    is[0] = socket[0].getInputStream();
+                    os[0] = socket[0].getOutputStream();
                     System.out.println("Client connected successfully");
+                    startReading.start();
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -62,36 +99,12 @@ public class Server_main {
 
         boolean running = true;
 
+
         while (running){
             String input = reader.readLine();
-            if (!input.equals("")) {
-                StringTokenizer tokens = new StringTokenizer(input, ":");
+            sendMessage(input, os[0]);
 
-                String command = tokens.nextToken();
-                String attributes = tokens.nextToken();
-
-                switch (command) {
-                    case "startChallenge":
-                        StartChallengeMessage sCMessg = new StartChallengeMessage(attributes);
-                        break;
-                    case "sendToken":
-                        StringTokenizer tAtts = new StringTokenizer(attributes);
-                        String tArbol = tAtts.nextToken();
-                        String tValor = tAtts.nextToken();
-                        SendToken sToken = new SendToken(tArbol, tValor);
-                        break;
-                    default:
-                        System.out.println("Command not valid. Try:");
-                        System.out.println("* startChallenge:<<type of tree>>");
-                        System.out.println("* sendToken:<<Type of tree>>,<<value>>");
-                }
-            } else {
-                System.out.println("Command not valid. Try:");
-                System.out.println("* startChallenge:<<type of tree>>");
-                System.out.println("* sendToken:<<Type of tree>>,<<value>>");
-            }
         }
-
     }
 
 }
