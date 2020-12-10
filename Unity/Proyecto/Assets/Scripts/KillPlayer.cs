@@ -12,5 +12,9 @@ public class KillPlayer : MonoBehaviour
         {
             collision2D.transform.position = spawnPoint.position;
         }
+        else if (collision2D.transform.CompareTag("Player2")){
+            collision2D.transform.position = spawnPoint.position;
+
+        }
     }
 }
