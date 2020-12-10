@@ -13,6 +13,7 @@ public class Server_main {
     static String[] trees = {"AVL","BST","BT", "SPL"};
     static PlayerManager[] players;
     static boolean[] onChallenge = {false};
+    static long[] cST = {System.currentTimeMillis()};
 
     public static void  sendMessage(String msg, OutputStream os) throws IOException {
         byte [] toSendBytes = msg.getBytes();
@@ -90,7 +91,6 @@ public class Server_main {
                                     sendMessage(players[playerNumber].addToTree(tokenValue),os[0]);
                                 }
 
-
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -123,7 +123,30 @@ public class Server_main {
 
         Thread startChallenge = new Thread() {
             public void run() {
-                //sendMessage("Start Challenge:"+"");
+                int index = (int)(Math.random()*((4-1)+1));
+                try {
+                    sendMessage("Start Challenge:"+trees[index], os[0]);
+                    onChallenge[0]=true;
+                    int amnt_players = players.length;
+
+                    while (onChallenge[0]) {
+
+                        for (int i = 0; i < amnt_players+1; i++) {
+                            //long challengeTime = System.currentTimeMillis-cST
+                            //if (players[i].getTree().isFull())
+                            //send(won challenge:#player
+                            //else if(challengeTime>30);
+                            //sendMessage("times up");
+                            //
+                            //onChallenge[0]=false
+
+
+                        }
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
 
             }
         };

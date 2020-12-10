@@ -26,4 +26,22 @@ public class PlayerManager {
     public String addToTree(int value){
         return "";
     }
+    //"AVL","BST","BT", "SPL"
+    public void setArbol_actual(String tipo){
+        switch (tipo){
+            case "AVL":
+                this.arbol_actual = new AVLTree();
+                break;
+            case "BST":
+                this.arbol_actual = new BSTree();
+                break;
+            case "BT":
+                this.arbol_actual = new BTree();
+                break;
+            case "SPL":
+                this.arbol_actual = new SplayTree();
+                break;
+
+        }
+    }
 }
