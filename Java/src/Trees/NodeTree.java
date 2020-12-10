@@ -5,11 +5,20 @@ public class NodeTree<T> {
     private T Data;
     private NodeTree right;
     private NodeTree left;
+    private int heigh;
 
 
     public NodeTree(T Data) {
         this.Data = Data;
+        this.heigh = 1;
+    }
 
+    public NodeTree(T Data,int heigh) {
+        this.Data = Data;
+        this.heigh = heigh;
+    }
+
+    public NodeTree(){
     }
 
     public T getData() {
@@ -24,7 +33,7 @@ public class NodeTree<T> {
         return right;
     }
 
-    public void setRight(NodeTree right) {
+    public void setRight(NodeTree<T> right) {
         this.right = right;
     }
 
@@ -32,7 +41,15 @@ public class NodeTree<T> {
         return left;
     }
 
-    public void setLeft(NodeTree left) {
+    public void setLeft(NodeTree<T> left) {
         this.left = left;
+    }
+
+    public int getHeigh() {
+        return heigh ;
+    }
+
+    public void setHeigh(int heigh) {
+        this.heigh  = heigh;
     }
 }
