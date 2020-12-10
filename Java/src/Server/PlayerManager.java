@@ -49,7 +49,7 @@ public class PlayerManager {
                 this.arbol_actual = new BSTree();
                 break;
             case "BT":
-                this.arbol_actual = new BTree();
+                this.arbol_actual = new BTree(4);
                 break;
             case "SPL":
                 this.arbol_actual = new SplayTree();

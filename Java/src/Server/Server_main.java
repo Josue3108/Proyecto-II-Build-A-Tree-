@@ -156,8 +156,8 @@ public class Server_main {
                     while (onChallenge[0]) {
 
                         for (int i = 0; i < amnt_players+1; i++) {
-                            //long challengeTime = System.currentTimeMillis-cST
-                            //if (players[i].getTree().isFull())
+                            long challengeTime = System.currentTimeMillis()-cST[0];
+                            if (players[i].getArbol_actual().isFull());
                             //send(won challenge:#player
                             //else if(challengeTime>30);
                             //sendMessage("times up");
