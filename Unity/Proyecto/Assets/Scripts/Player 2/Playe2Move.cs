@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Playe2Move : MonoBehaviour
 {   
+    //declaración de variables
 
     public float runSpeed=2;
 
@@ -24,6 +25,7 @@ public class Playe2Move : MonoBehaviour
     private float posx,posy;
 
     public bool ForcePush=false; 
+    public bool Shield=false;
 
     void Start()
     {
@@ -77,20 +79,24 @@ public class Playe2Move : MonoBehaviour
         }
 
         
-
-        if(VerAttack2Left.colli && Input.GetKey("l")){
-            if (ForcePush){
-                rb2D.velocity = new Vector2 (20,rb2D.velocity.y);
-            }else{
-                rb2D.velocity = new Vector2 (15,rb2D.velocity.y);
-            }            
-        }
-        if(VerAttack2Right.colli && Input.GetKey("l")){            
-            if (ForcePush){
-                rb2D.velocity = new Vector2 (-20,rb2D.velocity.y);
-            }else{
-                rb2D.velocity = new Vector2 (-15,rb2D.velocity.y);
-            } 
+        if (Shield==false){
+            if(VerAttack2Left.colli && Input.GetKey("l")){
+                if (ForcePush){
+                    rb2D.velocity = new Vector2 (20,rb2D.velocity.y);
+                }else{
+                    rb2D.velocity = new Vector2 (15,rb2D.velocity.y);
+                }            
+            }
+            if(VerAttack2Right.colli && Input.GetKey("l")){            
+                if (ForcePush){
+                    rb2D.velocity = new Vector2 (-20,rb2D.velocity.y);
+                }else{
+                    rb2D.velocity = new Vector2 (-15,rb2D.velocity.y);
+                } 
+            }
+        }else{
+            rb2D.velocity = new Vector2 (0,rb2D.velocity.y);
+            Shield=false;
         }
             
             
