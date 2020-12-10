@@ -1,16 +1,39 @@
 package Trees;
 
+import java.util.LinkedList;
+
 public class BTree extends Tree{
 
-
+    private  String code = "";
+    private  LinkedList<BTreeNode> pendiente ;
+    private  LinkedList<BTreeNode> pendienteaux;
+    private  int  niveles = 0;
     public BTreeNode root; // Pointer to root node
     public int t; // Minimum degree
+    private int limit = 3;
+
+    public int getLimit() {
+        return limit;
+    }
+
+    public void setLimit(){
+        this.limit = 3;
+    }
+    public void setLimit(int limit) {
+        this.limit = limit;
+    }
 
     // Constructor (Initializes tree as empty)
     public BTree(int t) {
         this.root = null;
         this.t = t;
     }
+    public BTree(){
+        this.root = null;
+        this.t = 3;
+    }
+
+
 
     // function to traverse the tree
     public void traverse() {
@@ -70,5 +93,84 @@ public class BTree extends Tree{
         return "B";
     }
 
+    public String getTreeCode(){
+        String c = getTreeCodeaux();
+        niveles = 0;
+        return c;
+    }
+
+    public boolean isFull(){
+        getTreeCodeaux();
+        if(niveles>=limit){
+            niveles = 0;
+            return true;
+        }
+        else{
+            niveles = 0;
+            return false;
+        }
+    }
+
+    private String getTreeCodeaux(){
+        pendiente = new LinkedList<>();
+        pendienteaux = new LinkedList<>();
+        pendiente.add(this.root);
+        printB();
+        return code;
+    }
+
+    private  void  printB(){
+
+
+
+        while(pendiente.size()!=0) {
+
+            String subcode = "";
+
+            for (int i = 0; i < pendiente.size(); i++) {
+                subcode+=")";
+                subcode+=printMi(pendiente.get(i));
+
+            }
+            for (int i = 0; i < pendiente.size(); i++) {
+                setPendienteaux(pendiente.get(i));
+            }
+
+            code+="/";
+            code+= subcode.substring(1);
+
+            niveles++;
+            pendiente = pendienteaux;
+            pendienteaux = new LinkedList<>();
+
+        }
+        code = code.substring(1);
+
+
+    }
+
+    private  String printMi(BTreeNode node){
+        String subsubcode = "";
+        int[] elem = node.getKeys();
+
+        for(int i = 0; i<elem.length ; i++){
+            if(elem[i]!=0) {
+                System.out.println(elem[i]);
+                subsubcode+=","+String.valueOf(elem[i]);
+            }
+        }
+
+        return subsubcode.substring(1);
+    }
+
+    private  void setPendienteaux(BTreeNode node){
+        BTreeNode[] childs = node.getC();
+        for(int j = 0;j<childs.length;j++){
+            if(childs[j]!=null){
+                pendienteaux.add(childs[j]);
+            }
+        }
+
+    }
 
 }

@@ -185,64 +185,67 @@ public class AVLTree<T> extends Tree {
 
     }
 
-    public String  getTreeCode(){
+    public String getTreeCode() {
         int range = 1;
         int c = 0;
         LinkedList<NodeTree> lista = new LinkedList<>();
         lista.add(this.root);
-        String codigo = String.valueOf(this.root.getData()) ;
-        codigo += ",";
-        codigo += "/";
+        String codigo = String.valueOf(this.root.getData());
+        String subcodigo;
         int top = 1;
 
-        while(top<this.elements){
+        while (top < this.elements) {
+            codigo += "/";
+            subcodigo = "";
+            for (int i = c; i < range + c; i++) {
 
-            for(int i = c; i< range+c ;i++ ){
-
-                if(lista.get(i)!=null) {
+                if (lista.get(i) != null) {
 
                     if (lista.get(i).getLeft() != null) {
                         lista.add(lista.get(i).getLeft());
-                        codigo += String.valueOf(lista.get(i).getLeft().getData());
-                        codigo += ",";
+                        subcodigo += ",";
+                        subcodigo += String.valueOf(lista.get(i).getLeft().getData());
                         top += 1;
                     } else {
                         lista.add(null);
-                        codigo += "null";
-                        codigo += ",";
+                        subcodigo += ",";
+                        subcodigo += "null";
                     }
 
 
                     if (lista.get(i).getRight() != null) {
                         lista.add(lista.get(i).getRight());
-                        codigo += String.valueOf(lista.get(i).getRight().getData());
-                        codigo += ",";
+                        subcodigo += ",";
+                        subcodigo += String.valueOf(lista.get(i).getRight().getData());
                         top += 1;
                     } else {
                         lista.add(null);
-                        codigo += "null";
-                        codigo += ",";
+                        subcodigo += ",";
+                        subcodigo += "null";
+
                     }
                 }else{
                     lista.add(null);
-                    codigo += "null";
-                    codigo += ",";
+                    subcodigo += ",";
+                    subcodigo += "null";
+
 
                     lista.add(null);
-                    codigo += "null";
-                    codigo += ",";
+                    subcodigo += ",";
+                    subcodigo += "null";
+
 
                 }
             }
 
-            c=range+c;
-            range = range*2;
-            codigo += "/";
+            c = range + c;
+            range = range * 2;
 
+            codigo+= subcodigo.substring(1);
         }
 
 
-        return  codigo;
+        return codigo;
     }
     public void preOrder(){
         preOrder(this.root);

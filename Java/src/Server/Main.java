@@ -16,9 +16,17 @@ import java.util.stream.IntStream;
 
 public class Main{
 
-    public static void main(String[] args) {
+    private static String code = "";
+    private static LinkedList<BTreeNode> pendiente ;
+    private static LinkedList<BTreeNode> pendienteaux;
+    private static int  niveles = 0;
 
-	// write your code her
+    public static void main(String[] args) {
+        pendiente = new LinkedList<>();
+        pendienteaux = new LinkedList<>();
+
+
+        // write your code her
 
 
         BTree tree = new BTree(3);
@@ -38,11 +46,18 @@ public class Main{
 
         tree.insert(9);
 
-        System.out.println(tree.getType());
+        System.out.println(tree.getTreeCode());
+        System.out.println(tree.isFull());
 
 
 
-        printB(tree.root);
+     //   pendiente.add(tree.root);
+      //  printB();
+
+       // System.out.print(code);
+        //System.out.print(niveles);
+
+
 
       //  System.out.println(tree.getLevels());
        // System.out.println(tree.getTreeCode());
@@ -50,20 +65,55 @@ public class Main{
 
     }
 
-    private static void printB(BTreeNode node){
+    private static void  printB(){
 
-        BTreeNode[] childs = node.getC();
+
+
+        while(pendiente.size()!=0) {
+
+            String subcode = "";
+
+            for (int i = 0; i < pendiente.size(); i++) {
+                subcode+=")";
+                subcode+=printMi(pendiente.get(i));
+
+            }
+            for (int i = 0; i < pendiente.size(); i++) {
+                setPendienteaux(pendiente.get(i));
+            }
+
+            code+="/";
+            code+= subcode.substring(1);
+
+            niveles++;
+            pendiente = pendienteaux;
+            pendienteaux = new LinkedList<>();
+
+        }
+        code = code.substring(1);
+
+
+    }
+
+    private static String printMi(BTreeNode node){
+        String subsubcode = "";
         int[] elem = node.getKeys();
-        if (elem == null ){
-            System.out.println("elem null");
-        }
-        if (childs == null){
-            System.out.println("childs null");
-        }
 
         for(int i = 0; i<elem.length ; i++){
             if(elem[i]!=0) {
                 System.out.println(elem[i]);
+                subsubcode+=","+String.valueOf(elem[i]);
+            }
+        }
+
+        return subsubcode.substring(1);
+    }
+
+    private static void setPendienteaux(BTreeNode node){
+        BTreeNode[] childs = node.getC();
+        for(int j = 0;j<childs.length;j++){
+            if(childs[j]!=null){
+                pendienteaux.add(childs[j]);
             }
         }
 
