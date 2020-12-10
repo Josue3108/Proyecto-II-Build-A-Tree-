@@ -6,6 +6,10 @@ import java.net.Socket;
 
 import java.util.StringTokenizer;
 
+/**
+ * Main class for the console server
+ *
+ */
 public class Server_main {
 
     //PORT TO LISTEN TO
@@ -15,6 +19,12 @@ public class Server_main {
     static boolean[] onChallenge = {false};
     static long[] cST = {System.currentTimeMillis()};
 
+    /**
+     *
+     * @param msg
+     * @param os
+     * @throws IOException
+     */
     public static void  sendMessage(String msg, OutputStream os) throws IOException {
         byte [] toSendBytes = msg.getBytes();
         int toSendLen = toSendBytes.length;
@@ -27,6 +37,11 @@ public class Server_main {
         os.write(toSendBytes);
     }
 
+    /**
+     *
+     * @param args
+     * @throws IOException
+     */
     public static void main(String[] args) throws IOException{
         final boolean[] flag1 = {true};
 
@@ -56,7 +71,9 @@ public class Server_main {
         final InputStream[] is = {null};
         final OutputStream[] os = {null};
 
-
+        /**
+         * Thread that reads the incomind messages from the client
+         */
         Thread startReading = new Thread() {
             public void run() {
                 while (true){
@@ -86,6 +103,8 @@ public class Server_main {
                                     //token:TYPE:VALUE
                                     players[playerNumber].addPuntos(4);
                                     sendMessage("Add:"+playerNumber+":4",os[0]);
+                                    //REMEMBER TO SEND ENCODED TREE
+                                    //sendMessage("Arbol:"+playerNumber+":"+players[playerNumber].getArbol_actual().getTreeCode())
 
                                     int tokenValue = Integer.parseInt(tokens.nextToken());
                                     sendMessage(players[playerNumber].addToTree(tokenValue),os[0]);
@@ -102,6 +121,9 @@ public class Server_main {
 
         ServerSocket finalServer = server;
 
+        /**
+         * Thread that creates a socket with a request from a client
+         */
         Thread startSocket = new Thread() {
             public void run() {
                 try {
@@ -120,7 +142,9 @@ public class Server_main {
 
         startSocket.start();
 
-
+        /**
+         * Thread that changes the necessary variables to start a challenge
+         */
         Thread startChallenge = new Thread() {
             public void run() {
                 int index = (int)(Math.random()*((4-1)+1));
@@ -132,8 +156,8 @@ public class Server_main {
                     while (onChallenge[0]) {
 
                         for (int i = 0; i < amnt_players+1; i++) {
-                            //long challengeTime = System.currentTimeMillis-cST
-                            //if (players[i].getTree().isFull())
+                            long challengeTime = System.currentTimeMillis()-cST[0];
+                            if (players[i].getArbol_actual().isFull());
                             //send(won challenge:#player
                             //else if(challengeTime>30);
                             //sendMessage("times up");
