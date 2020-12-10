@@ -23,6 +23,8 @@ public class Playe2Move : MonoBehaviour
 
     private float posx,posy;
 
+    public bool ForcePush=false; 
+
     void Start()
     {
         rb2D=GetComponent<Rigidbody2D>();
@@ -74,11 +76,21 @@ public class Playe2Move : MonoBehaviour
             }
         }
 
+        
+
         if(VerAttack2Left.colli && Input.GetKey("l")){
-            rb2D.velocity = new Vector2 (15,rb2D.velocity.y);
+            if (ForcePush){
+                rb2D.velocity = new Vector2 (20,rb2D.velocity.y);
+            }else{
+                rb2D.velocity = new Vector2 (15,rb2D.velocity.y);
+            }            
         }
         if(VerAttack2Right.colli && Input.GetKey("l")){            
-            rb2D.velocity = new Vector2 (-15,rb2D.velocity.y);
+            if (ForcePush){
+                rb2D.velocity = new Vector2 (-20,rb2D.velocity.y);
+            }else{
+                rb2D.velocity = new Vector2 (-15,rb2D.velocity.y);
+            } 
         }
             
             
