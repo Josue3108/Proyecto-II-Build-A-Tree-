@@ -44,4 +44,8 @@ public class PlayerManager {
 
         }
     }
+
+    public Tree getArbol_actual() {
+        return this.arbol_actual;
+    }
 }

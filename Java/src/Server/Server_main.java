@@ -86,6 +86,8 @@ public class Server_main {
                                     //token:TYPE:VALUE
                                     players[playerNumber].addPuntos(4);
                                     sendMessage("Add:"+playerNumber+":4",os[0]);
+                                    //REMEMBER TO SEND ENCODED TREE
+                                    //sendMessage("Arbol:"+playerNumber+":"+players[playerNumber].getArbol_actual().getTreeCode())
 
                                     int tokenValue = Integer.parseInt(tokens.nextToken());
                                     sendMessage(players[playerNumber].addToTree(tokenValue),os[0]);
