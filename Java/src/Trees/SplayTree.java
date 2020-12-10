@@ -1,4 +1,4 @@
 package Trees;
 
-public class SplayTree {
+public class SplayTree extends Tree{
 }
