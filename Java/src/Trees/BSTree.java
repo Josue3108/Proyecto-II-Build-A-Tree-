@@ -201,7 +201,7 @@ public class BSTree<T> extends Tree{
     }
 
     public boolean isFull(){
-        if(this.levels>=this.limit ){
+        if(this.levels>=this.limit){
             return true;
         }else{
             return false;

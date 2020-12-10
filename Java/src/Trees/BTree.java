@@ -1,6 +1,6 @@
 package Trees;
 
-public class BTree {
+public class BTree extends Tree{
 
 
     public BTreeNode root; // Pointer to root node

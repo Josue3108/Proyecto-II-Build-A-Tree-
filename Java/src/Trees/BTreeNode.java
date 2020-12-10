@@ -2,7 +2,7 @@ package Trees;
 
 
     // A BTree node
-public class BTreeNode extends Tree{
+public class BTreeNode{
     int[] keys; // An array of keys
     int t; // Minimum degree (defines the range for number of keys)
     BTreeNode[] C; // An array of child pointers

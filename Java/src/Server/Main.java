@@ -40,26 +40,34 @@ public class Main{
 
         System.out.println(tree.getType());
 
-        int[] root = tree.root.getKeys();
-        System.out.println(root[0]);
-
-        for(int i = 0; i<root.length ; i++){
-            System.out.println(root[i]);
-        }
 
 
+        printB(tree.root);
 
       //  System.out.println(tree.getLevels());
        // System.out.println(tree.getTreeCode());
 
 
-
-
-
-
     }
 
+    private static void printB(BTreeNode node){
 
+        BTreeNode[] childs = node.getC();
+        int[] elem = node.getKeys();
+        if (elem == null ){
+            System.out.println("elem null");
+        }
+        if (childs == null){
+            System.out.println("childs null");
+        }
+
+        for(int i = 0; i<elem.length ; i++){
+            if(elem[i]!=0) {
+                System.out.println(elem[i]);
+            }
+        }
+
+    }
 
 
 }
