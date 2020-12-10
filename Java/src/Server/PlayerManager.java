@@ -4,11 +4,11 @@ import Trees.*;
 
 public class PlayerManager {
     private int puntos;
-    private Tree arbol;
+    private Tree arbol_actual;
 
     public PlayerManager(){
         this.puntos = 0;
-        this.arbol = null;
+        this.arbol_actual = null;
     }
 
     public int getPuntos(){
@@ -17,12 +17,13 @@ public class PlayerManager {
 
     public void addPuntos(int addedPoints){
         this.puntos += addedPoints;
-
     }
 
     public void setPuntos(int puntos) {
         this.puntos = puntos;
     }
 
-
+    public String addToTree(int value){
+        return "";
+    }
 }

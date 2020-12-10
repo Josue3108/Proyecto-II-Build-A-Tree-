@@ -10,6 +10,9 @@ public class Server_main {
 
     //PORT TO LISTEN TO
     static int PORT = 8000;
+    static String[] trees = {"AVL","BST","BT", "SPL"};
+    static PlayerManager[] players;
+    static boolean[] onChallenge = {false};
 
     public static void  sendMessage(String msg, OutputStream os) throws IOException {
         byte [] toSendBytes = msg.getBytes();
@@ -22,6 +25,7 @@ public class Server_main {
         os.write(toSendLenBytes);
         os.write(toSendBytes);
     }
+
     public static void main(String[] args) throws IOException{
         final boolean[] flag1 = {true};
 
@@ -68,6 +72,26 @@ public class Server_main {
                         String msg = new String(receivedBytes,0,len);
 
                         System.out.println(msg);
+
+                        StringTokenizer tokens = new StringTokenizer(msg, ":");
+
+                        String msg_type = tokens.nextToken();
+
+                        switch (msg_type){
+                            case "token":
+                                if (onChallenge[0]){
+                                    int playerNumber = Integer.parseInt(tokens.nextToken());
+                                    //if tree type equals token type
+                                    //token:TYPE:VALUE
+                                    players[playerNumber].addPuntos(4);
+                                    sendMessage("Add:"+playerNumber+":4",os[0]);
+
+                                    int tokenValue = Integer.parseInt(tokens.nextToken());
+                                    sendMessage(players[playerNumber].addToTree(tokenValue),os[0]);
+                                }
+
+
+                        }
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -96,6 +120,13 @@ public class Server_main {
 
         startSocket.start();
 
+
+        Thread startChallenge = new Thread() {
+            public void run() {
+                //sendMessage("Start Challenge:"+"");
+
+            }
+        };
 
         boolean running = true;
 
